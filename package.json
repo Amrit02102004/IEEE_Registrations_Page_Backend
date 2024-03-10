@@ -1,0 +1,23 @@
+{
+  "name": "ieee_registrations_page_backend",
+  "version": "1.0.0",
+  "description": "Backend For the IEEE Registration Page",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Amrit02102004/IEEE_Registrations_Page_Backend.git"
+  },
+  "author": "IEEE_People",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Amrit02102004/IEEE_Registrations_Page_Backend/issues"
+  },
+  "homepage": "https://github.com/Amrit02102004/IEEE_Registrations_Page_Backend#readme",
+  "dependencies": {
+    "express": "^4.18.3",
+    "mongodb": "^6.4.0"
+  }
+}
