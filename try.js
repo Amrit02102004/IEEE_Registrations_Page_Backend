@@ -1,31 +1,22 @@
-const mongoose = require('mongoose');
+const { MongoClient } = require('mongodb');
+const uri = 'mongodb+srv://amritsundarka:00000000@registrations.dyjnai8.mongodb.net/?retryWrites=true&w=majority&appName=Registrations';
 
-// Connect to MongoDB
-mongoose.connect('mongodb+srv://amritsundarka:00000000@registrations.dyjnai8.mongodb.net/?retryWrites=true&w=majority&appName=Registrations', { useNewUrlParser: true, useUnifiedTopology: true });
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Define the schema
-const detailsSchema = new mongoose.Schema({
-    Register_Number: String,
-    Student_Name: String,
-    EmailID: String,
-    Mobile_No: String,
-    Domains: String
-});
+async function connectToDatabase(emailId) {
+    try {
+        await client.connect();
 
-// Create a model
-const Details = mongoose.model('Details', detailsSchema);
+        console.log('Connected to the database');
+        const database = client.db('Members');
+        const collection = database.collection('Details');
+        const queryResult = await collection.findOne({ EmailID: emailId });
+        console.log('Query Result:', queryResult);
+    } catch (error) {
+        console.error('Error connecting to the database:', error);
+    } finally {
+        await client.close();
+    }
+}
 
-// Define the email to search for
-const emailToSearch = 'amrit.sundarka2022@vitstudent.ac.in';
-// Search for the document with the given email
-Details.findOne({ EmailID: emailToSearch })
-    .then(result => {
-        if (result) {
-            console.log('Document found:', result);
-        } else {
-            console.log('No document found with email:', emailToSearch);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+connectToDatabase('amrit.sundarka2022@vitstudent.ac.in'); 
