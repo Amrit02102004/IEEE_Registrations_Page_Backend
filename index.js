@@ -68,3 +68,5 @@ app.post('/check_user', async (req, res) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
+module.exports = app;

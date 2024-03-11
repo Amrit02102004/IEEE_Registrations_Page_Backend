@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "vercel-build": "echo hello vercel",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Amrit02102004/IEEE_Registrations_Page_Backend.git"
@@ -22,6 +23,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.18.3",
     "mongodb": "^6.4.0",
-    "mongoose": "^8.2.1"
+    "mongoose": "^8.2.1",
+    "vercel": "^33.5.5"
   }
 }
