@@ -11,12 +11,42 @@ app.use(express.json())
 
 app.get('/details', (req, res) => {
   Detail.find({})
-  .then(Details => {
-    res.status(200).json(Details);
+  .then(details => {
+    res.status(200).json(details);
   }) .catch(error => {
     res.status(500).json({message: error.message});
   })
 });
+
+app.get('/details/:id', (req, res) => {
+  const {id} = req.params;
+  Detail.findById(id)
+  .then(details => {
+    res.status(200).json(details)
+  }) .catch(error => {
+    res.status(500).json({message: error.message})
+  })
+});
+
+app.put('/details/:id', (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ message: "Invalid Product Id" })
+  }
+  Detail.findByIdAndUpdate(id, req.body)
+    .then(details => {
+      if (!details) {
+        return res.status(404).json({ message: "Product not find" });
+      }
+      Detail.findById(id)
+        .then(updatedDetail => {
+          res.status(200).json(updatedDetail)
+        })
+    }).catch(error => {
+      res.status(500).json
+    })
+})
+
 
 
 mongoose.connect('mongodb+srv://amritsundarka:00000000@registrations.dyjnai8.mongodb.net/Members?retryWrites=true&w=majority&appName=Registrations')
