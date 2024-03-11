@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const Detail = require('./models/studentModel');
@@ -49,7 +50,7 @@ app.put('/details/:id', (req, res) => {
 
 
 
-mongoose.connect('mongodb+srv://amritsundarka:00000000@registrations.dyjnai8.mongodb.net/Members?retryWrites=true&w=majority&appName=Registrations')
+mongoose.connect(process.env.mongo_URL)
   .then(() => {
     console.log('connected to monogdb');
     app.listen(PORT, () => {
