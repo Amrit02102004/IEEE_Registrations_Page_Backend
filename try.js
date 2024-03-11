@@ -14,6 +14,9 @@ async function connectToDatabase(emailId) {
         const collection = database.collection('Details');
         const queryResult = await collection.findOne({ EmailID: emailId });
         console.log('Query Result:', queryResult);
+        if(queryResult){
+            console.log('Skoa');
+        }
     } catch (error) {
         console.error('Error connecting to the database:', error);
     } finally {
@@ -21,4 +24,24 @@ async function connectToDatabase(emailId) {
     }
 }
 
-connectToDatabase('amrit.sundarka2022@vitstudent.ac.in'); 
+// connectToDatabase('amrit.sundarka2022@vitstudent.ac.in'); 
+
+const mongoose = require('mongoose');
+
+// Get a reference to the collection
+const collection = mongoose.connection.collection('Details');
+
+// Example: Update a single document in the collection
+collection.updateOne(
+  { 'emailID': 'akshit.anand2022@vitstudent.ac.in' }, // Filter for the document you want to update
+  { $set: { 
+      'domains': "web"  // Set new values for the domains field
+  } }, // Update operation
+  (err, result) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(result);
+    }
+  }
+);
