@@ -19,42 +19,27 @@ app.get('/details', (req, res) => {
   })
 });
 
-app.get('/details/:email', (req, res) => {
-  const { email } = req.params;
-  Detail.findOne({ EmailID: email })
-    .then(details => {
-      if (details) {
-        const domains = details.Domains || [];
-        res.status(200).json(domains);
-      } else {
-        res.status(404).json({ message: "Details not found for the provided email" });
-      }
-    })
-    .catch(error => {
-      console.error("Error finding details:", error);
-      res.status(500).json({ message: "An error occurred while fetching details" });
-    });
-});
-
-
-app.get('/profile/:email', (req,res) => {
-  const { email } = req.params;
-  Detail.findOne({EmailID: email})
-  .then (details => {
+app.get('/details/:id', (req, res) => {
+  const {id} = req.params;
+  Detail.findById(id)
+  .then(details => {
     res.status(200).json(details)
-  }) .catch (error => {
+  }) .catch(error => {
     res.status(500).json({message: error.message})
   })
-})
+});
 
-app.put('/details/:email', (req, res) => {
-  const { email } = req.params;
-  Detail.findOneAndUpdate({EmailID: email}, req.body)
+app.put('/details/:id', (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ message: "Invalid Product Id" })
+  }
+  Detail.findByIdAndUpdate(id, req.body)
     .then(details => {
       if (!details) {
-        return res.status(404).json({ message: "Student not found" });
+        return res.status(404).json({ message: "Product not find" });
       }
-      Detail.findOne({EmailID: email})
+      Detail.findById(id)
         .then(updatedDetail => {
           res.status(200).json(updatedDetail)
         })
@@ -65,7 +50,7 @@ app.put('/details/:email', (req, res) => {
 
 
 
-mongoose.connect(process.env.mongoURL2)
+mongoose.connect(process.env.mongoURL)
   .then(() => {
     console.log('connected to monogdb');
     app.listen(PORT, () => {
