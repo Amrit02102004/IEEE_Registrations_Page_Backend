@@ -1,19 +1,62 @@
+require('dotenv').config();
+const express = require('express');
 const mongoose = require('mongoose');
+const Detail = require('./models/studentModel');
+// require('dotenv').config();
+// const mongoURL = process.env.mongoURL;
 
-// Get a reference to the collection
-const collection = mongoose.connection.collection('Details');
+const app = express();
+const PORT = process.env.PORT || 4030;
 
-// Example: Update a single document in the collection
-collection.updateOne(
-  { 'emailID': 'akshit.anand2022@vitstudent.ac.in' }, // Filter for the document you want to update
-  { $set: { 
-      'domains': "web"  // Set new values for the domains field
-  } }, // Update operation
-  (err, result) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(result);
-    }
+app.use(express.json())
+
+app.get('/details', (req, res) => {
+  Detail.find({})
+  .then(details => {
+    res.status(200).json(details);
+  }) .catch(error => {
+    res.status(500).json({message: error.message});
+  })
+});
+
+app.get('/details/:id', (req, res) => {
+  const {id} = req.params;
+  Detail.findById(id)
+  .then(details => {
+    res.status(200).json(details)
+  }) .catch(error => {
+    res.status(500).json({message: error.message})
+  })
+});
+
+app.put('/details/:id', (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ message: "Invalid Product Id" })
   }
-);
+  Detail.findByIdAndUpdate(id, req.body)
+    .then(details => {
+      if (!details) {
+        return res.status(404).json({ message: "Product not find" });
+      }
+      Detail.findById(id)
+        .then(updatedDetail => {
+          res.status(200).json(updatedDetail)
+        })
+    }).catch(error => {
+      res.status(500).json
+    })
+})
+
+
+
+mongoose.connect(process.env.mongo_URL)
+  .then(() => {
+    console.log('connected to monogdb');
+    app.listen(PORT, () => {
+      console.log(`Port is running at: ${PORT}`)
+    });
+  }).catch((error) => {
+    console.log(error)
+  });
+
