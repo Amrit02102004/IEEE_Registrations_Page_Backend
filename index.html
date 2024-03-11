@@ -18,7 +18,7 @@
     <script>
         function sendEmail() {
             const emailInput = document.getElementById('emailInput');
-            const email = emailInput.value;
+            const emailID = emailInput.value;
 
             const apiUrl = 'http://localhost:4030/check_user'; 
 
@@ -27,7 +27,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ x: email }) 
+                body: JSON.stringify({ email : emailID }) 
             })
             .then(response => {
                 if (!response.ok) {

@@ -50,7 +50,7 @@ async function searchMail(emailId) {
 
 
 app.post('/check_user', async (req, res) => { 
-    const email  = req.body.x;
+    const email  = req.body.email;
     try {
         const val = await searchMail(email); 
         if (val === 1) {
