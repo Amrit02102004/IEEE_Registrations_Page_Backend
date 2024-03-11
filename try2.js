@@ -50,7 +50,7 @@ app.put('/details/:id', (req, res) => {
 
 
 
-mongoose.connect(process.env.mongo_URL)
+mongoose.connect(process.env.mongoURL)
   .then(() => {
     console.log('connected to monogdb');
     app.listen(PORT, () => {
