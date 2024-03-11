@@ -49,9 +49,6 @@ app.get('/profile/:email', (req,res) => {
 
 app.put('/details/:email', (req, res) => {
   const { email } = req.params;
-  // if (!mongoose.isValidObjectId(id)) {
-  //   return res.status(400).json({ message: "Invalid Product Id" })
-  // }
   Detail.findOneAndUpdate({EmailID: email}, req.body)
     .then(details => {
       if (!details) {
@@ -68,7 +65,7 @@ app.put('/details/:email', (req, res) => {
 
 
 
-mongoose.connect(process.env.mongoURL)
+mongoose.connect(process.env.mongoURL2)
   .then(() => {
     console.log('connected to monogdb');
     app.listen(PORT, () => {
