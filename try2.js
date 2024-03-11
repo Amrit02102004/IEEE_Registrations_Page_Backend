@@ -1,19 +1,25 @@
-const mongoose = require('mongoose');
+const express = require('express');
+const { MongoClient } = require('mongodb');
 
-// Get a reference to the collection
-const collection = mongoose.connection.collection('Details');
+const app = express();
+const PORT = process.env.PORT || 4030;
 
-// Example: Update a single document in the collection
-collection.updateOne(
-  { 'emailID': 'akshit.anand2022@vitstudent.ac.in' }, // Filter for the document you want to update
-  { $set: { 
-      'domains': "web"  // Set new values for the domains field
-  } }, // Update operation
-  (err, result) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(result);
-    }
+app.use(express.json());
+
+app.get('/details', async (req, res) => {
+  try {
+    const client = await MongoClient.connect('mongodb+srv://amritsundarka:00000000@registrations.dyjnai8.mongodb.net');
+    const database = client.db('Members');
+    const collection = database.collection('Details');
+    const details = await collection.find({}).toArray();
+    res.status(200).json(details);
+    client.close();
+  } catch (error) {
+    console.error('Error fetching details:', error);
+    res.status(500).json({ message: 'Error fetching details' });
   }
-);
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running at: ${PORT}`);
+});
