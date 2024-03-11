@@ -19,27 +19,45 @@ app.get('/details', (req, res) => {
   })
 });
 
-app.get('/details/:id', (req, res) => {
-  const {id} = req.params;
-  Detail.findById(id)
-  .then(details => {
-    res.status(200).json(details)
-  }) .catch(error => {
-    res.status(500).json({message: error.message})
-  })
+app.get('/details/:email', (req, res) => {
+  const { email } = req.params;
+  Detail.findOne({ EmailID: email })
+    .then(details => {
+      if (details) {
+        const domains = details.Domains || [];
+        res.status(200).json(domains);
+      } else {
+        res.status(404).json({ message: "Details not found for the provided email" });
+      }
+    })
+    .catch(error => {
+      console.error("Error finding details:", error);
+      res.status(500).json({ message: "An error occurred while fetching details" });
+    });
 });
 
-app.put('/details/:id', (req, res) => {
-  const { id } = req.params;
-  if (!mongoose.isValidObjectId(id)) {
-    return res.status(400).json({ message: "Invalid Product Id" })
-  }
-  Detail.findByIdAndUpdate(id, req.body)
+
+app.get('/profile/:email', (req,res) => {
+  const { email } = req.params;
+  Detail.findOne({EmailID: email})
+  .then (details => {
+    res.status(200).json(details)
+  }) .catch (error => {
+    res.status(500).json({message: error.message})
+  })
+})
+
+app.put('/details/:email', (req, res) => {
+  const { email } = req.params;
+  // if (!mongoose.isValidObjectId(id)) {
+  //   return res.status(400).json({ message: "Invalid Product Id" })
+  // }
+  Detail.findOneAndUpdate({EmailID: email}, req.body)
     .then(details => {
       if (!details) {
-        return res.status(404).json({ message: "Product not find" });
+        return res.status(404).json({ message: "Student not found" });
       }
-      Detail.findById(id)
+      Detail.findOne({EmailID: email})
         .then(updatedDetail => {
           res.status(200).json(updatedDetail)
         })
