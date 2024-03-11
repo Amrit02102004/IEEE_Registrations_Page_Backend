@@ -1,21 +1,9 @@
 {
-    "version": 2,
-    "routes": [
-      {
-        "src": "/check_user",
-        "dest": "/api/server.js"
-      },
-      {
-        "src": "/get_domains/:email",
-        "dest": "/api/server.js"
-      },
-      {
-        "src": "/profile/:email",
-        "dest": "/api/server.js"
-      },
-      {
-        "src": "/put_domains/:email",
-        "dest": "/api/server.js"
-      }]
-    }
-  
+  "version": 2,
+  "routes": [
+    { "src": "/check_user", "dest": "/api/server.js" },
+    { "src": "/get_domains/:email", "dest": "/api/server.js" },
+    { "src": "/profile/:email", "dest": "/api/server.js" },
+    { "src": "/put_domains/:email", "dest": "/api/server.js" }
+  ]
+}
