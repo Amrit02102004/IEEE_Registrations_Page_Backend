@@ -24,6 +24,6 @@ const studentSchema = mongoose.Schema(
         }
 }, {collection : 'Details'});
 
-const Detail = mongoose.model('Detail', studentSchema);
+const Detail = mongoose.model('Details', studentSchema);
 
 module.exports = Detail;
