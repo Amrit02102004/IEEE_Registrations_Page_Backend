@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "routes": [
-    { "src": "/check_user", "dest": "/api/server.js" }
-  ],
   "rewrites": [
+    {
+      "source": "/check_user",
+      "destination": "/api/server.js"
+    },
     {
       "source": "/get_domains/:email",
       "destination": "/api/server.js"
