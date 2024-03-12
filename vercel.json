@@ -1,15 +1,9 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "index.js",
-      "use": "@now/node"
-    }
-  ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "index.js"
-    }
+    { "src": "/check_user", "dest": "/api/server.js" },
+    { "src": "/get_domains/*", "dest": "/api/server.js" },
+    { "src": "/profile/*", "dest": "/api/server.js" },
+    { "src": "/put_domains/*","dest": "/api/server.js" }
   ]
 }
