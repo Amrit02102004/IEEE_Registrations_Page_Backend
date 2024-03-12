@@ -1,9 +1,20 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/check_user", "dest": "/api/server.js" },
-    { "src": "/get_domains/*", "dest": "/api/server.js" },
-    { "src": "/profile/*", "dest": "/api/server.js" },
-    { "src": "/put_domains/*","dest": "/api/server.js" }
+    { "src": "/check_user", "dest": "/api/server.js" }
+  ],
+  "rewrites": [
+    {
+      "source": "/get_domains/:email",
+      "destination": "/api/server.js"
+    },
+    {
+      "source": "/put_domains/:email",
+      "destination": "/api/server.js"
+    },
+    {
+      "source": "/profile/:email",
+      "destination": "/api/server.js"
+    }
   ]
 }
