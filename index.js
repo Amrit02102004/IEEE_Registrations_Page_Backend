@@ -77,8 +77,8 @@ app.post('/check_user', async (req, res) => {
   }
 });
 
-app.get('/get_domains/:email', (req, res) => {
-  const { email } = req.params;
+app.get('/get_domains', (req, res) => {
+  const  email  = req.body.email;
   Detail.findOne({ EmailID: email })
     .then(details => {
       if (details) {
@@ -95,8 +95,9 @@ app.get('/get_domains/:email', (req, res) => {
 });
 
 
-app.get('/profile/:email', (req, res) => {
-  const { email } = req.params;
+app.get('/profile', (req, res) => {
+  // const { email } = req.params;
+  const email = req.body.email;
   Detail.findOne({ EmailID: email })
     .then(details => {
       res.status(200).json(details)
@@ -105,8 +106,8 @@ app.get('/profile/:email', (req, res) => {
     })
 })
 
-app.put('/put_domains/:email', (req, res) => {
-  const { email } = req.params;
+app.put('/put_domains', (req, res) => {
+  const email = req.body.email;
   Detail.findOneAndUpdate({ EmailID: email }, req.body)
     .then(details => {
       if (!details) {
